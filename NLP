@@ -1,0 +1,187 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+import re
+import nltk
+nltk.download('stopwords')
+from nltk.corpus import stopwords
+from nltk.stem.porter import PorterStemmer
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, recall_score, f1_score
+
+
+
+
+dataset = pd.read_csv('Restaurant_Reviews copy.tsv', delimiter='\t', quoting=3)
+
+
+corpus = []
+for i in range(0, 1000):
+  review = re.sub('[^a-zA-Z]', ' ', dataset['Review'][i])
+  review = review.lower()
+  review = review.split()
+  ps = PorterStemmer()
+  all_stopwords = stopwords.words('english')
+  all_stopwords.remove('not')
+  review = [ps.stem(word) for word in review if not word in set(all_stopwords)]
+  review = ' '.join(review)
+  corpus.append(review)
+
+print(corpus)
+
+
+cv = CountVectorizer(max_features=1500)
+X = cv.fit_transform(corpus).toarray()
+y = dataset.iloc[:, -1].values
+
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.20, random_state = 0)
+
+# Naive Bayes
+from sklearn.naive_bayes import GaussianNB
+classifier = GaussianNB()
+classifier.fit(X_train, y_train)
+
+y_pred = classifier.predict(X_test)
+
+cm = confusion_matrix(y_test, y_pred)
+score = accuracy_score(y_test, y_pred)
+precision = precision_score(y_test, y_pred)
+recall = recall_score(y_test, y_pred)
+f_score = f1_score(y_test, y_pred)
+print(f" \nNaive Bayes \n {cm} \n Accurancy score: {score}\n Precision score: {precision}\n Recall score: {recall}\n F1 score: {f_score}\n")
+
+
+
+# Decision Tree
+from sklearn.tree import DecisionTreeClassifier
+classifier1 = DecisionTreeClassifier(criterion='entropy', random_state=0)
+classifier1.fit(X_train, y_train)
+
+y_pred1 = classifier1.predict(X_test)
+
+cm1 = confusion_matrix(y_test, y_pred1)
+score1 = accuracy_score(y_test, y_pred1)
+precision1 = precision_score(y_test, y_pred1)
+recall1 = recall_score(y_test, y_pred1)
+f_score1 = f1_score(y_test, y_pred1)
+print(f" Decision Tree \n {cm1} \n Accurancy score: {score1}\n Precision score: {precision1}\n Recall score: {recall1}\n F1 score: {f_score1}\n")
+
+
+
+# K-Neighbors classification
+from sklearn.neighbors import KNeighborsClassifier
+classifier2 = KNeighborsClassifier(n_neighbors=5, metric='minkowski', p=2)
+classifier2.fit(X_train, y_train)
+
+y_pred2 = classifier2.predict(X_test)
+
+cm2 = confusion_matrix(y_test, y_pred2)
+score2 = accuracy_score(y_test, y_pred2)
+precision2 = precision_score(y_test, y_pred2)
+recall2 = recall_score(y_test, y_pred2)
+f_score2 = f1_score(y_test, y_pred2)
+print(f" K-Neighbors \n {cm2} \n Accurancy score: {score2}\n Precision score: {precision2}\n Recall score: {recall2}\n F1 score: {f_score2}\n")
+
+
+# Kernel-SVM classification
+
+from sklearn.svm import SVC
+classifier3 = SVC(kernel='rbf', random_state=0)
+classifier3.fit(X_train, y_train)
+
+y_pred3 = classifier3.predict(X_test)
+
+cm3 = confusion_matrix(y_test, y_pred3)
+score3 = accuracy_score(y_test, y_pred3)
+precision3 = precision_score(y_test, y_pred3)
+recall3 = recall_score(y_test, y_pred3)
+f_score3 = f1_score(y_test, y_pred3)
+print(f" Kernel-svm \n {cm3} \n Accurancy score: {score3}\n Precision score: {precision3}\n Recall score: {recall3}\n F1 score: {f_score3}\n")
+
+
+
+
+# Random Forest
+
+from sklearn.ensemble import RandomForestClassifier
+classifier4 = RandomForestClassifier(n_estimators=10, criterion='entropy', random_state=0)
+classifier4.fit(X_train, y_train)
+
+y_pred4 = classifier4.predict(X_test)
+
+cm4 = confusion_matrix(y_test, y_pred4)
+score4 = accuracy_score(y_test, y_pred4)
+precision4 = precision_score(y_test, y_pred4)
+recall4 = recall_score(y_test, y_pred4)
+f_score4 = f1_score(y_test, y_pred4)
+print(f" Random Forest \n {cm4} \n Accurancy score: {score4}\n Precision score: {precision4}\n Recall score: {recall4}\n F1 score: {f_score4}\n")
+
+
+
+#SVM
+
+from sklearn.svm import SVC
+classifier5 = SVC(kernel='linear', random_state=0)
+classifier5.fit(X_train, y_train)
+
+y_pred5 = classifier5.predict(X_test)
+
+cm5 = confusion_matrix(y_test, y_pred5)
+score5 = accuracy_score(y_test, y_pred5)
+precision5 = precision_score(y_test, y_pred5)
+recall5 = recall_score(y_test, y_pred5)
+f_score5 = f1_score(y_test, y_pred5)
+print(f" SVM \n {cm5} \n Accurancy score: {score5}\n Precision score: {precision5}\n Recall score: {recall5}\n F1 score: {f_score5}\n")
+
+
+
+#CART
+
+from sklearn.tree import DecisionTreeClassifier
+classifier6 = DecisionTreeClassifier(criterion='gini', random_state=0)
+classifier6.fit(X_train, y_train)
+
+y_pred6 = classifier6.predict(X_test)
+
+cm6 = confusion_matrix(y_test, y_pred6)
+score6 = accuracy_score(y_test, y_pred6)
+precision6 = precision_score(y_test, y_pred6)
+recall6 = recall_score(y_test, y_pred6)
+f_score6 = f1_score(y_test, y_pred6)
+print(f" CART \n {cm6} \n Accurancy score: {score6}\n Precision score: {precision6}\n Recall score: {recall6}\n F1 score: {f_score6}\n")
+
+
+
+#Logistic regression
+
+from sklearn.linear_model import LogisticRegression
+classifier7 = LogisticRegression(solver='lbfgs')
+classifier7.fit(X_train, y_train)
+
+y_pred7 = classifier7.predict(X_test)
+
+cm7 = confusion_matrix(y_test, y_pred7)
+score7 = accuracy_score(y_test, y_pred7)
+precision7 = precision_score(y_test, y_pred7)
+recall7 = recall_score(y_test, y_pred7)
+f_score7 = f1_score(y_test, y_pred7)
+print(f" Logistic ragression \n {cm7} \n Accurancy score: {score7}\n Precision score: {precision7}\n Recall score: {recall7}\n F1 score: {f_score7}\n")
+
+
+def inspect():
+
+  names = ["Naive Bayes", "Decision Tree", " K-Neighbors", "Kernel-svm", "Random Forest", "SVM", "CART",
+           "LG(Maximum Entropy)"]
+  accurancy = [score, score1, score2, score3, score4, score5, score6, score7]
+  Precision = [precision, precision1, precision2, precision3, precision4, precision5, precision6, precision7]
+  Recall = [recall, recall1, recall2, recall3, recall4, recall5, recall6, recall7]
+  F1 = [f_score, f_score1, f_score2, f_score3, f_score4, f_score5, f_score6, f_score7]
+  return list(zip(names, accurancy, Precision, Recall, F1))
+
+
+resultsinDataFrame = pd.DataFrame(inspect(),
+                                  columns=['Classifications', 'Accuracies', 'Precision scores', 'Recall scores', 'F1_scores'])
+
+
+print(resultsinDataFrame)
