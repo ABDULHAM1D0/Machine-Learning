@@ -1,1 +1,79 @@
-from sklearn.datasets import load_irisfrom sklearn.neighbors import KNeighborsClassifierfrom sklearn.model_selection import train_test_split, GridSearchCV, RandomizedSearchCVfrom sklearn.tree import DecisionTreeClassifierfrom sklearn.svm import SVCimport numpy as npdataset = load_iris()X = dataset.data y = dataset.targetX_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 42)#KNNknn = KNeighborsClassifier()knn_param = {"n_neighbors": np.arange(2, 31)}knn_grid_search = GridSearchCV(knn, knn_param)knn_grid_search.fit(X_train, y_train)print("KNN Grid Search best parameters:", knn_grid_search.best_params_)print("KNN Grid Search best accuracy:", knn_grid_search.best_score_)knn_random_search = RandomizedSearchCV(knn, knn_param)knn_random_search.fit(X_train, y_train)print("KNN Random Search best parameters:", knn_random_search.best_params_)print("KNN Random Search best accuracy:", knn_random_search.best_score_)print()#DTdt = DecisionTreeClassifier()dt_param = {"max_depth": [3, 5, 7],            "max_leaf_nodes": [None, 5, 10, 20, 30, 40, 50]}dt_grid_search = GridSearchCV(dt, dt_param)dt_grid_search.fit(X_train, y_train)print("DT Grid Search best parameters:", dt_grid_search.best_params_)print("DT Grid Search best accuracy:", dt_grid_search.best_score_)dt_random_search = RandomizedSearchCV(dt, dt_param)dt_random_search.fit(X_train, y_train)print("DT Random Search best parameters:", dt_random_search.best_params_)print("DT Random Search best accuracy:", dt_random_search.best_score_)print()#SVMsvm = SVC()svm_param = {"C": [0.1, 1, 10, 100],             "gamma": [0.1, 0.01, 0.001, 0.0001]}svm_grid_search = GridSearchCV(svm, svm_param)svm_grid_search.fit(X_train, y_train)print("SVM Grid Search best parameters:", svm_grid_search.best_params_)print("SVM Grid Search best accuracy:", svm_grid_search.best_score_)svm_random_search = RandomizedSearchCV(svm, svm_param)svm_random_search.fit(X_train, y_train)print("SVM Random Search best parameters:", svm_random_search.best_params_)print("SVM Random Search best accuracy:", svm_random_search.best_score_)
+from sklearn.datasets import load_iris
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.model_selection import train_test_split, GridSearchCV, RandomizedSearchCV
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.svm import SVC
+import numpy as np
+
+
+dataset = load_iris()
+X = dataset.data 
+y = dataset.target
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 42)
+
+
+#KNN
+knn = KNeighborsClassifier()
+knn_param = {"n_neighbors": np.arange(2, 31)}
+
+knn_grid_search = GridSearchCV(knn, knn_param)
+knn_grid_search.fit(X_train, y_train)
+print("KNN Grid Search best parameters:", knn_grid_search.best_params_)
+print("KNN Grid Search best accuracy:", knn_grid_search.best_score_)
+
+knn_random_search = RandomizedSearchCV(knn, knn_param)
+knn_random_search.fit(X_train, y_train)
+print("KNN Random Search best parameters:", knn_random_search.best_params_)
+print("KNN Random Search best accuracy:", knn_random_search.best_score_)
+print()
+
+#DT
+
+dt = DecisionTreeClassifier()
+dt_param = {"max_depth": [3, 5, 7],
+            "max_leaf_nodes": [None, 5, 10, 20, 30, 40, 50]}
+
+dt_grid_search = GridSearchCV(dt, dt_param)
+dt_grid_search.fit(X_train, y_train)
+print("DT Grid Search best parameters:", dt_grid_search.best_params_)
+print("DT Grid Search best accuracy:", dt_grid_search.best_score_)
+
+dt_random_search = RandomizedSearchCV(dt, dt_param)
+dt_random_search.fit(X_train, y_train)
+print("DT Random Search best parameters:", dt_random_search.best_params_)
+print("DT Random Search best accuracy:", dt_random_search.best_score_)
+print()
+
+#SVM
+
+svm = SVC()
+svm_param = {"C": [0.1, 1, 10, 100],
+             "gamma": [0.1, 0.01, 0.001, 0.0001]}
+
+svm_grid_search = GridSearchCV(svm, svm_param)
+svm_grid_search.fit(X_train, y_train)
+print("SVM Grid Search best parameters:", svm_grid_search.best_params_)
+print("SVM Grid Search best accuracy:", svm_grid_search.best_score_)
+
+svm_random_search = RandomizedSearchCV(svm, svm_param)
+svm_random_search.fit(X_train, y_train)
+print("SVM Random Search best parameters:", svm_random_search.best_params_)
+print("SVM Random Search best accuracy:", svm_random_search.best_score_)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
