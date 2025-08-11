@@ -1,1 +1,85 @@
-from sklearn.datasets import load_diabetesfrom sklearn.model_selection import train_test_split, GridSearchCVfrom sklearn.linear_model import Lasso, Ridge, ElasticNetfrom sklearn.metrics import mean_squared_errordataset = load_diabetes()X = dataset.datay = dataset.targetX_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 42)# Ridgeridge = Ridge()ridge_param = {"alpha": [0.1, 1, 10, 100]}ridge_grid = GridSearchCV(ridge, ridge_param, cv = 5)ridge_grid.fit(X_train, y_train)print("The best params of Ridge: ", ridge_grid.best_params_)print("The best accuracy of Ridge: ", ridge_grid.best_score_)ridge_model = ridge_grid.best_estimator_y_pred_ridge = ridge_model.predict(X_test)ridge_mse = mean_squared_error(y_test, y_pred_ridge)print("MSE of Ridge:", ridge_mse)print()#Lassolass = Lasso()lass_param = {"alpha": [0.1, 1, 10, 100]}lass_grid = GridSearchCV(lass, lass_param, cv = 5)lass_grid.fit(X_train, y_train)print("The best params of Lasso: ", lass_grid.best_params_)print("The best accuracy of Lasso: ", lass_grid.best_score_)lass_model = lass_grid.best_estimator_y_pred_lass = lass_model.predict(X_test)ridge_mse = mean_squared_error(y_test, y_pred_lass)print("MSE of Lasso:", ridge_mse)print()# Elasticelas = ElasticNet()elas_param = {"alpha": [0.1, 1, 10, 100],              "l1_ratio": [0.1, 0.3, 0.5, 0.7, 0.9]}elas_grid = GridSearchCV(elas, elas_param, cv = 5)elas_grid.fit(X_train, y_train)print("The best params of Elastic: ", elas_grid.best_params_)print("The best accuracy of :Elastic ", elas_grid.best_score_)elas_model = elas_grid.best_estimator_y_pred_elas = elas_model.predict(X_test)elas_mse = mean_squared_error(y_test, y_pred_elas)print("MSE of Elastic:", elas_mse)
+from sklearn.datasets import load_diabetes
+from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.linear_model import Lasso, Ridge, ElasticNet
+from sklearn.metrics import mean_squared_error
+
+dataset = load_diabetes()
+
+X = dataset.data
+y = dataset.target
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 42)
+
+# Ridge
+
+
+ridge = Ridge()
+ridge_param = {"alpha": [0.1, 1, 10, 100]}
+
+ridge_grid = GridSearchCV(ridge, ridge_param, cv = 5)
+ridge_grid.fit(X_train, y_train)
+
+
+print("The best params of Ridge: ", ridge_grid.best_params_)
+print("The best accuracy of Ridge: ", ridge_grid.best_score_)
+
+ridge_model = ridge_grid.best_estimator_
+y_pred_ridge = ridge_model.predict(X_test)
+ridge_mse = mean_squared_error(y_test, y_pred_ridge)
+print("MSE of Ridge:", ridge_mse)
+print()
+
+
+#Lasso
+
+lass = Lasso()
+lass_param = {"alpha": [0.1, 1, 10, 100]}
+
+lass_grid = GridSearchCV(lass, lass_param, cv = 5)
+lass_grid.fit(X_train, y_train)
+
+
+print("The best params of Lasso: ", lass_grid.best_params_)
+print("The best accuracy of Lasso: ", lass_grid.best_score_)
+
+lass_model = lass_grid.best_estimator_
+y_pred_lass = lass_model.predict(X_test)
+ridge_mse = mean_squared_error(y_test, y_pred_lass)
+print("MSE of Lasso:", ridge_mse)
+print()
+
+
+# Elastic
+
+elas = ElasticNet()
+elas_param = {"alpha": [0.1, 1, 10, 100],
+              "l1_ratio": [0.1, 0.3, 0.5, 0.7, 0.9]}
+
+elas_grid = GridSearchCV(elas, elas_param, cv = 5)
+elas_grid.fit(X_train, y_train)
+
+
+print("The best params of Elastic: ", elas_grid.best_params_)
+print("The best accuracy of :Elastic ", elas_grid.best_score_)
+
+elas_model = elas_grid.best_estimator_
+y_pred_elas = elas_model.predict(X_test)
+elas_mse = mean_squared_error(y_test, y_pred_elas)
+print("MSE of Elastic:", elas_mse)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
