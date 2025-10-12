@@ -50,4 +50,4 @@ regressor.fit(X_train, y_train)
 y_pred = regressor.predict(X_test)
 
 mse = np.sqrt(mean_squared_error(y_test, y_pred))
-print("Multivariable regression: ", mse)
+print(f"Multivariable regression:{mse}')
