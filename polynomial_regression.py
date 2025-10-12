@@ -25,7 +25,7 @@ y_pred = regressor.predict(X_test_poly)
 plt.plot(X_test, y_pred, color = "red")
 plt.xlabel("X")
 plt.xlabel("Y")
-plt.title("Polynomial Regression")
+plt.title("Polynomial Regression.")
 
 
 #%%
