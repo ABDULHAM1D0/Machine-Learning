@@ -7,7 +7,7 @@ import numpy as np
 
 
 
-
+# uploading dataset
 dataset = load_iris()
 X = dataset.data 
 y = dataset.target
