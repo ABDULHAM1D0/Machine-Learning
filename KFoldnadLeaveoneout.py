@@ -2,6 +2,7 @@ from sklearn.datasets import load_iris
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split, KFold, LeaveOneOut, GridSearchCV
 
+# loading dataset.
 dataset = load_iris()
 X = dataset.data
 y = dataset.target
