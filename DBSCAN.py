@@ -2,6 +2,7 @@ from sklearn.datasets import make_circles
 from sklearn.cluster import DBSCAN
 import matplotlib.pyplot as plt
 
+# by using this function, we made dataset
 X, _ = make_circles(n_samples=1000, noise = 0.08, factor = 0.5, random_state=42)
 
 plt.figure()
